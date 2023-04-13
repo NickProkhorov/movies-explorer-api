@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    select: false, // какой параметр дб в select чтобы не возвращать в ответе?
+    select: false,
   },
 });
 

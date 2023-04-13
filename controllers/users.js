@@ -7,9 +7,9 @@ const NotFoundError = require('../errors/not-found-err');
 const StatusConflictError = require('../errors/status-conflict-err');
 const BadRequestError = require('../errors/bad-request-err');
 
-module.exports.createUser = (req, res, next) => { // POST /signup - создаёт пользователя с переданными в теле email, password и name
+module.exports.createUser = (req, res, next) => {
   const {
-    name, about, avatar, email, password,
+    name, email, password,
   } = req.body;
 
   bcrypt.hash(password, 10)
@@ -35,7 +35,7 @@ module.exports.createUser = (req, res, next) => { // POST /signup - создаё
     });
 };
 
-module.exports.login = (req, res, next) => { // POST /signin - проверяет переданные в теле почту и пароль и возвращает JWT
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
@@ -46,11 +46,11 @@ module.exports.login = (req, res, next) => { // POST /signin - проверяе�
     .catch(next);
 };
 
-module.exports.getCurrentUser = (req, res, next) => { // GET /users/me - возвращает информацию о пользователе (email и имя)
+module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => { throw new NotFoundError('Пользователь c указанным id не найден'); })
     .then((user) => {
-      res.status(http2.constants.HTTP_STATUS_OK).send(user);
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -61,7 +61,7 @@ module.exports.getCurrentUser = (req, res, next) => { // GET /users/me - воз�
     });
 };
 
-module.exports.updateUserProfile = (req, res, next) => { // PATCH /users/me - обновляет информацию о пользователе (email и имя)
+module.exports.updateUserProfile = (req, res, next) => {
   const { name, email } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
     .then((user) => {
@@ -69,8 +69,8 @@ module.exports.updateUserProfile = (req, res, next) => { // PATCH /users/me - о
         throw new NotFoundError('Пользователь c указанным id не найден');
       }
       return res.send({
-          name: user.name, email: user.email, _id: user._id,
-        });
+        name: user.name, email: user.email,
+      });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
