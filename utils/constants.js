@@ -2,4 +2,27 @@ const regexUrl = /^(https?:\/\/)?(w{3}\.)?[a-zA-Z0-9@:%._+~#=-]{1,256}\.[a-zA-Z0
 const regexEnNames = /^[a-zA-Z0-9\s]+$/;
 const regexRuNames = /[а-яА-ЯёЁ]/;
 
-module.exports = { regexUrl, regexEnNames, regexRuNames };
+const pageNotFoundErrMsg = 'Cтраница не существует';
+const userNotFoundErrMsg = 'Пользователь c указанным id не найден';
+const movieNotFoundErrMsg = 'Фильм c указанным id не найден';
+const userStatusConflictErrMsg = 'Пользователь с такими данными уже существует';
+const userBadRequestErrMsg = 'Переданы некорректные данные при создании пользователя';
+const movieForbiddenErrMsg = 'Нельзя удалить чужой фильм';
+const unauthErrMsg = 'Необходима авторизация';
+const crashTestErrMsg = 'Сервер сейчас упадёт';
+const unauthUserErrMsg = 'Неправильные почта или пароль';
+
+module.exports = {
+  regexUrl,
+  regexEnNames,
+  regexRuNames,
+  pageNotFoundErrMsg,
+  userNotFoundErrMsg,
+  movieNotFoundErrMsg,
+  userStatusConflictErrMsg,
+  userBadRequestErrMsg,
+  movieForbiddenErrMsg,
+  unauthErrMsg,
+  crashTestErrMsg,
+  unauthUserErrMsg,
+};

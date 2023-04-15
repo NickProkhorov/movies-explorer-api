@@ -39,6 +39,12 @@ const checkUpdateUserProfile = celebrate({
   }),
 });
 
+const checkDeleteMovie = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().hex().length(24),
+  }),
+});
+
 module.exports = {
-  checkSignup, checkSignin, checkCreateMovie, checkUpdateUserProfile,
+  checkSignup, checkSignin, checkCreateMovie, checkUpdateUserProfile, checkDeleteMovie,
 };

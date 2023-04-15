@@ -1,8 +1,11 @@
+require('dotenv').config();
 const http2 = require('http2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+const { JWT_SECRET, NODE_ENV, JWT_SECRET_DEV } = process.env;
+const { userNotFoundErrMsg, userStatusConflictErrMsg, userBadRequestErrMsg } = require('../utils/constants');
 const NotFoundError = require('../errors/not-found-err');
 const StatusConflictError = require('../errors/status-conflict-err');
 const BadRequestError = require('../errors/bad-request-err');
@@ -24,11 +27,11 @@ module.exports.createUser = (req, res, next) => {
       }))
     .catch((err) => {
       if (err.code === 11000) {
-        next(new StatusConflictError('Пользователь с такими данными уже существует'));
+        next(new StatusConflictError(userStatusConflictErrMsg));
         return;
       }
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        next(new BadRequestError(userBadRequestErrMsg));
         return;
       }
       next(err);
@@ -40,7 +43,7 @@ module.exports.login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV !== 'production' ? 'extra-secret-key' : process.env.JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV !== 'production' ? JWT_SECRET_DEV : JWT_SECRET, { expiresIn: '7d' });
       res.send({ token });
     })
     .catch(next);
@@ -48,13 +51,13 @@ module.exports.login = (req, res, next) => {
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => { throw new NotFoundError('Пользователь c указанным id не найден'); })
+    .orFail(() => { throw new NotFoundError(userNotFoundErrMsg); })
     .then((user) => {
       res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
+        next(new BadRequestError(userBadRequestErrMsg));
         return;
       }
       next(err);
@@ -66,7 +69,7 @@ module.exports.updateUserProfile = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Пользователь c указанным id не найден');
+        throw new NotFoundError(userNotFoundErrMsg);
       }
       return res.send({
         name: user.name, email: user.email,
@@ -74,7 +77,7 @@ module.exports.updateUserProfile = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
+        next(new BadRequestError(userBadRequestErrMsg));
         return;
       }
       next(err);

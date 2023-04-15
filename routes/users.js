@@ -7,8 +7,7 @@ const {
   updateUserProfile, getCurrentUser,
 } = require('../controllers/users');
 
-router.get('/me', auth, getCurrentUser); // GET /users/me - возвращает информацию о пользователе (email и имя)
-
+router.get('/me', auth, getCurrentUser);
 router.patch('/me', auth, checkUpdateUserProfile, updateUserProfile);
 
 module.exports = router;
