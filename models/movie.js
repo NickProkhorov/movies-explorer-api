@@ -59,14 +59,14 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     required: true,
   },
-  nameRU: {
+  nameRu: {
     type: String,
     required: true,
   },
-  nameEN: {
+  nameEn: {
     type: String,
     required: true,
   },

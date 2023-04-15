@@ -28,20 +28,20 @@ const checkCreateMovie = celebrate({
     thumbnail: Joi.string().required().pattern(regexUrl),
     movieId: Joi.number().required(),
     nameEn: Joi.string().required().pattern(regexEnNames),
-    nameRU: Joi.string().required().pattern(regexRuNames),
+    nameRu: Joi.string().required().pattern(regexRuNames),
   }),
 });
 
 const checkUpdateUserProfile = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    about: Joi.string().required().min(2).max(30),
+    name: Joi.string().min(2).max(30),
+    email: Joi.string().email({ minDomainSegments: 2 }),
   }),
 });
 
 const checkDeleteMovie = celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().hex().length(24),
+    _id: Joi.string().hex().length(24),
   }),
 });
 

@@ -8,6 +8,6 @@ const {
 } = require('../controllers/users');
 
 router.get('/me', auth, getCurrentUser);
-router.patch('/me', auth, checkUpdateUserProfile, updateUserProfile);
+router.patch('/me', auth, checkUpdateUserProfile, updateUserProfile); // PATCH /users/me обновляет информацию о пользователе (email и имя)
 
 module.exports = router;

@@ -7,10 +7,12 @@ const userNotFoundErrMsg = 'Пользователь c указанным id н�
 const movieNotFoundErrMsg = 'Фильм c указанным id не найден';
 const userStatusConflictErrMsg = 'Пользователь с такими данными уже существует';
 const userBadRequestErrMsg = 'Переданы некорректные данные при создании пользователя';
+const movieBadRequestErrMsg = 'Переданы некорректные данные при создании карточки';
 const movieForbiddenErrMsg = 'Нельзя удалить чужой фильм';
 const unauthErrMsg = 'Необходима авторизация';
 const crashTestErrMsg = 'Сервер сейчас упадёт';
 const unauthUserErrMsg = 'Неправильные почта или пароль';
+const serverErrMsg = 'На сервере произошла ошибка';
 
 module.exports = {
   regexUrl,
@@ -21,8 +23,10 @@ module.exports = {
   movieNotFoundErrMsg,
   userStatusConflictErrMsg,
   userBadRequestErrMsg,
+  movieBadRequestErrMsg,
   movieForbiddenErrMsg,
   unauthErrMsg,
   crashTestErrMsg,
   unauthUserErrMsg,
+  serverErrMsg,
 };
