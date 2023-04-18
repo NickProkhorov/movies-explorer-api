@@ -23,8 +23,8 @@ module.exports.createMovie = (req, res, next) => {
     trailerLink,
     thumbnail,
     movieId,
-    nameRu,
-    nameEn,
+    nameRU,
+    nameEN,
   } = req.body;
   const owner = req.user;
 
@@ -39,8 +39,8 @@ module.exports.createMovie = (req, res, next) => {
     thumbnail,
     owner,
     movieId,
-    nameRu,
-    nameEn,
+    nameRU,
+    nameEN,
   })
     .then((movie) => res.send(movie))
     .catch((err) => {
@@ -52,7 +52,7 @@ module.exports.createMovie = (req, res, next) => {
     });
 };
 
-module.exports.deleteMovie = (req, res, next) => { // брать _id movie, который создает mongo
+module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(req.params._id)
     .then((checkMovie) => {
       if (!checkMovie) {

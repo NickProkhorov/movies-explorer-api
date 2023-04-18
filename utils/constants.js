@@ -1,6 +1,4 @@
 const regexUrl = /^(https?:\/\/)?(w{3}\.)?[a-zA-Z0-9@:%._+~#=-]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
-const regexEnNames = /^[a-zA-Z0-9\s]+$/;
-const regexRuNames = /[а-яА-ЯёЁ]/;
 
 const pageNotFoundErrMsg = 'Cтраница не существует';
 const userNotFoundErrMsg = 'Пользователь c указанным id не найден';
@@ -16,8 +14,6 @@ const serverErrMsg = 'На сервере произошла ошибка';
 
 module.exports = {
   regexUrl,
-  regexEnNames,
-  regexRuNames,
   pageNotFoundErrMsg,
   userNotFoundErrMsg,
   movieNotFoundErrMsg,

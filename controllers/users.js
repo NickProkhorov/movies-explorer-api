@@ -77,6 +77,14 @@ module.exports.updateUserProfile = (req, res, next) => {
       });
     })
     .catch((err) => {
+      if (err.code === 11000) {
+        next(new StatusConflictError(userStatusConflictErrMsg));
+        return;
+      }
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError(userBadRequestErrMsg));
+        return;
+      }
       if (err.name === 'CastError') {
         next(new BadRequestError(userBadRequestErrMsg));
         return;

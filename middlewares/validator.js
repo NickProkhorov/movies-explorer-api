@@ -1,9 +1,9 @@
 const { celebrate, Joi } = require('celebrate');
-const { regexUrl, regexEnNames, regexRuNames } = require('../utils/constants');
+const { regexUrl } = require('../utils/constants');
 
 const checkSignup = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email({ minDomainSegments: 2 }),
     password: Joi.string().required(),
   }),
@@ -27,8 +27,8 @@ const checkCreateMovie = celebrate({
     trailerLink: Joi.string().required().pattern(regexUrl),
     thumbnail: Joi.string().required().pattern(regexUrl),
     movieId: Joi.number().required(),
-    nameEn: Joi.string().required().pattern(regexEnNames),
-    nameRu: Joi.string().required().pattern(regexRuNames),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 });
 
